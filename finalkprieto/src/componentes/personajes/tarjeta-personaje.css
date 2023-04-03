@@ -1,6 +1,12 @@
+
+
+
+
 .tarjeta-personaje {
   display: flex;
   flex-direction: column;
+
+
 }
 
 .tarjeta-personaje > img {
@@ -9,10 +15,12 @@
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border: 1px solid #d0d0d0;
+  margin-left: 100px;
 }
 
 .tarjeta-personaje > div.tarjeta-personaje-body {
   padding: 10px;
+margin-left: 100px;
   border: 1px solid #d0d0d0;
   border-top: 0;
   border-bottom-right-radius: 5px;

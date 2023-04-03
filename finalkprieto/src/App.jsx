@@ -5,16 +5,25 @@ import PaginaInicio from "./paginas/Inicio.pagina";
 import PaginaFavoritos from "./paginas/Favoritos.pagina";
 import PaginaDetalle from "./paginas/Detalle.pagina";
 import Encabezado from "./componentes/layout/encabezado.componente";
+import { NumContext } from "./componentes/context/numcontext";
+import { useState } from "react";
 
 function App() {
+
+  const [page, setPage] = useState(5);
+  const [bottonReset,setBottonReset]= useState(false)
+  const [listaFavorito,setListaFavorito]= useState([])
   return (
     <div className="App">
+<NumContext.Provider value={{page, setPage,bottonReset,setBottonReset,listaFavorito,setListaFavorito}}>
+
       <Encabezado />
       <Routes>
         <Route path="/" element={<PaginaInicio />} />
         <Route path="favoritos" element={<PaginaFavoritos />} />
         <Route path="detalle" element={<PaginaDetalle />} />
       </Routes>
+      </NumContext.Provider>
     </div>
   );
 }
