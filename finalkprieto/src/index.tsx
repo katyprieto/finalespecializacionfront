@@ -8,8 +8,7 @@ import { store } from './componentes/redux/store'
 import { Provider } from 'react-redux'
 
 
-
-
+const rootElement: HTMLDivElement= document.querySelector('#root') as HTMLDivElement;
 
 ReactDOM.render(
 
@@ -20,13 +19,15 @@ ReactDOM.render(
  
   
   <React.StrictMode>
-    <BrowserRouter>
+    
     
     <Provider store={store}>
+    <BrowserRouter>
         <App />
+        </BrowserRouter>
         </Provider>
         
-    </BrowserRouter>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );

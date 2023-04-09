@@ -10,12 +10,12 @@ import { useState } from "react";
 
 function App() {
 
-  const [page, setPage] = useState(5);
+  
   const [bottonReset,setBottonReset]= useState(false)
-  const [listaFavorito,setListaFavorito]= useState([])
+
   return (
     <div className="App">
-<NumContext.Provider value={{page, setPage,bottonReset,setBottonReset,listaFavorito,setListaFavorito}}>
+<NumContext.Provider value={{bottonReset,setBottonReset}}>
 
       <Encabezado />
       <Routes>

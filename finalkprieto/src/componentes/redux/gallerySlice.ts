@@ -1,15 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 
-interface Photo 
+
+
+
+
+
+export interface Photo 
 {
-  info: {
-    count: number,
-    pages: number,
-    next: string,
-    prev: string,
-  },
-  results: [
-    {
       id: number,
       name: string,
       status: string,
@@ -25,17 +22,18 @@ interface Photo
         url: string,
       },
       image: string,
-      episode: [
-        string,
-      ],
+      episode: string[],
       url: string,
-      created: string,
-    },
-    // ...
-  ]
-}
+      created: string;
+    }
+ 
   
-      
+interface info{
+    count: number,
+    pages: number,
+    next: string,
+    prev: string;
+  }    
   
       
 interface info{
@@ -46,10 +44,34 @@ interface info{
 
 }
 
+export interface episodio{
+  id:number,
+  name: string,
+  status: string,
+  species: string,
+  type: string,
+  gender: string,
+  origin: {
+    name: string,
+    url: string,
+  },
+  location: {
+    name: string,
+    url: string,
+  },
+  image: string,
+episode:string [],
+  url: string,
+  created: string,
+} 
+
 interface initialType {
   busqueda: string,
     photos: Photo[],
+    episodio:episodio,
+    info: info,
     favoritos: number[],
+    detalle:number[],
     loading: boolean
 }
 
@@ -75,10 +97,39 @@ export const getPag = createAsyncThunk(
 
 
 
+
+
+
+
 const initialState: initialType = {
     busqueda: '',
     photos: [],
+    episodio:{
+      id: 0,
+      name: "",
+      status:"",
+      species: "",
+      type: "",
+      gender: "",
+      origin: {
+        name: "",
+        url: "",
+      },
+      location: {
+        name: "",
+        url: "",
+      },
+      image: "",
+    episode:[],
+      url: "",
+      created: "",
+    } ,
+    info: {count: 0,
+        pages: 1,
+        next: "",
+        prev: "",},
     favoritos: [],
+    detalle:[],
     loading: false,
 }
 
@@ -90,24 +141,46 @@ const gallerySlice = createSlice({
         state.busqueda = action.payload
     },
       actionFavorito:(state, action) => {
-        state.favoritos = action.payload},
+        state.favoritos = action.payload
+      },
+      actionDetalle:(state, action) => {
+        state.detalle = action.payload
+      }, 
+      actionResetFavorito:(state, action) => {
+        state.favoritos = []
+      },
+        
   },
     extraReducers: (builder) => {
         builder
             .addCase(getPhotos.pending, (state) => {
                 state.loading = true
             })
+            .addCase(getPag.pending, (state) => {
+                state.loading = true
+            })
             .addCase(getPhotos.fulfilled, (state, action) => {
                 state.loading = false
-                state.photos= action.payload
+                state.photos= action.payload.results
+                state.info=action.payload.info
             })
             .addCase(getPag.fulfilled, (state, action) => {
               state.loading = false
-              state.photos= action.payload
+              state.photos= action.payload.results
+                state.info=action.payload.info
           })
-      
+          .addCase(getPhotos.rejected, (state, action) => {
+            state.loading = false
+    
+        })
+        .addCase(getPag.rejected, (state, action) => {
+            state.loading = false
+    
+        })
+       
     }
 })
 
-export const{actionBusqueda,actionFavorito}=gallerySlice.actions
+export const{actionBusqueda,actionFavorito,actionDetalle,actionResetFavorito}=gallerySlice.actions
+
 export default gallerySlice.reducer
